@@ -130,3 +130,24 @@ groupes.forEach(groupe => {
 
     filtreGroupe.append(option)
 });
+function afficherEleves(){
+        const groupeChoisi = filtreGroupe.value;
+        const texteRecherche = recherche.value.toLowerCase().trim();
+
+        const elevesFiltres = eleves.filter((eleves) => {
+              const nom = eleves.nom.toLowerCase(); 
+              const prenom = eleves.prenom.toLowerCase(); 
+            
+        return (
+            (groupeChoisi === "" || eleves.groupeId === Number(groupeChoisi)) &&
+            (nom.includes(texteRecherche) || prenom.includes(texteRecherche))
+        );
+    });
+    runderData(elevesFiltres)
+}
+
+filtreGroupe.addEventListener("change" , afficherEleves)
+recherche.addEventListener("input" , afficherEleves)
+
+runderData(); 
+
