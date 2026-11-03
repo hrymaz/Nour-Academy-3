@@ -31,7 +31,7 @@ function creerLigne(eleve) {
     let moyenne = "—";
 
     if (notes.length > 0) {
-        const somme = notes.reduce((total, note) => total + note, 0);
+        const somme = notes.reduce((total, notes) => total + notes, 0);
         moyenne = (somme / notes.length).toFixed(1).replace(".", ",") + " / 20";
     }
 
@@ -42,7 +42,7 @@ function creerLigne(eleve) {
     li.classList.add("border-line", "bg-card");
     }
     li.dataset.id = eleve.id;
-
+    
     div.className = "flex flex-col gap-3 lg:flex-row lg:items-center";
 
     btn.type = "button";
@@ -106,3 +106,15 @@ const lignes = eleves.map(creerLigne);
 listeEleves.append(...lignes);
 
 compteur.textContent = eleves.length + " élèves";
+
+
+function runderData(filteData = eleves) {
+    listeEleves.replaceChildren();
+
+    const lignes = filteData.map(creerLigne);
+
+    listeEleves.append(...lignes);
+
+    compteur.textContent = filteData.length + " élèves";
+}
+
