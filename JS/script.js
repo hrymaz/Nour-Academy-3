@@ -32,7 +32,7 @@ function creerLigne(eleve) {
 
     if (notes.length > 0) {
         const somme = notes.reduce((total, notes) => total + notes, 0);
-        moyenne = (somme / notes.length).toFixed(1).replace(".", ",") + " / 20";
+        moyenne = (somme / notes.length).toFixed(0).replace(".", ",") + " / 20";
     }
 
     li.className = "rounded-2xl border border-line bg-card p-3";  
@@ -108,7 +108,7 @@ listeEleves.append(...lignes);
 compteur.textContent = eleves.length + " élèves";
 
 
-function runderData(filteData = eleves) {
+function runderData(filteData = eleves) { 
     listeEleves.replaceChildren();
 
     const lignes = filteData.map(creerLigne);
@@ -118,3 +118,15 @@ function runderData(filteData = eleves) {
     compteur.textContent = filteData.length + " élèves";
 }
 
+const filtreGroupe = document.querySelector("#filtre-groupe");
+const recherche = document.querySelector("#recherche"); 
+
+
+groupes.forEach(groupe => {
+    const option = document.createElement("option")
+
+    option.value = groupe.id
+    option.textContent = groupe.nom
+
+    filtreGroupe.append(option)
+});
