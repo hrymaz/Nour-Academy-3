@@ -41,7 +41,7 @@ function creerLigne(eleve) {
     } else {
     li.classList.add("border-line", "bg-card");
     }
-    li.dataset.id = eleve.id;
+    
     
     div.className = "flex flex-col gap-3 lg:flex-row lg:items-center";
 
@@ -68,8 +68,11 @@ function creerLigne(eleve) {
     divActions.className = "flex gap-2";
 
     btnAbsent.type = "button";
+    btnAbsent.dataset.action = "absent";
     btnAbsent.className = "btn-absent h-11 rounded-full border border-line px-3 sm:px-4 text-sm font-medium hover:bg-paper";
     btnAbsent.textContent = "Absent";
+
+    btnAbsent.dataset.id = eleve.id;
 
     labelInput.className = "flex-1";
 
@@ -100,13 +103,6 @@ function creerLigne(eleve) {
 
     return li;
 }
-
-const lignes = eleves.map(creerLigne);
-
-listeEleves.append(...lignes);
-
-compteur.textContent = eleves.length + " élèves";
-
 
 function runderData(filteData = eleves) { 
     listeEleves.replaceChildren();
@@ -139,13 +135,30 @@ function afficherEleves(){
               const prenom = eleves.prenom.toLowerCase(); 
             
         return (
-            (groupeChoisi === "" || eleves.groupeId === Number(groupeChoisi)) &&
+            (groupeChoisi === ""  || eleves.groupeId === Number(groupeChoisi )) &&
             (nom.includes(texteRecherche) || prenom.includes(texteRecherche))
         );
     });
     runderData(elevesFiltres)
 }
+const liste = document.querySelector("#liste");
+   
+function absences(e) {
+    const button = e.target.closest(".btn-absent");
+    if (!button) return;
+    const id = Number(button.dataset.id);
+    
+    const eleve = eleves.find(eleve => eleve.id === id )
 
+    if(!eleve) return ; 
+     
+    eleve.absences++
+  
+    runderData();
+}
+
+
+listeEleves.addEventListener("click" , absences)
 filtreGroupe.addEventListener("change" , afficherEleves)
 recherche.addEventListener("input" , afficherEleves)
 
