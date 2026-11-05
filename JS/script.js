@@ -246,7 +246,22 @@ code.addEventListener("input" , () => {
      console.log("code valide")
    }
 })
-
+eleve.addEventListener("click" , (e) => {
+   e.preventDefault()
+   const button = e.target.closest("button")
+   if(!button) return
+   const fiche = {
+         id: eleves.length++,
+         prenom: prenom.value,
+         nom: nom.value,
+         groupeId: groupe.value, 
+         telephoneParent: telephone.value, 
+         absences: 0, 
+         notes: []}
+ eleves.push(fiche)
+ 
+runderData();
+} )
 
 listeEleves.addEventListener("click" , note)
 listeEleves.addEventListener("click" , absences)
