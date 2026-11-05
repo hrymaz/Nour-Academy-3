@@ -1,4 +1,3 @@
-
 const listeEleves = document.querySelector("#liste-eleves");
 const compteur = document.querySelector("#compteur");
 
@@ -28,11 +27,12 @@ function creerLigne(eleve) {
 
     const initiales = eleve.prenom[0] + eleve.nom[0];
 
+
     let moyenne = "—";
 
     if (notes.length > 0) {
         const somme = notes.reduce((total, notes) => total + notes, 0);
-        moyenne = (somme / notes.length).toFixed(0).replace(".", ",") + " / 20";
+        moyenne = (somme / notes.length).toFixed(1).replace(".", ",") + " / 20";
     }
 
     li.className = "rounded-2xl border border-line bg-card p-3";  
@@ -80,17 +80,23 @@ function creerLigne(eleve) {
     srOnly.className = "sr-only";
 
     inputNote.className = "h-11 w-full rounded-full border border-line bg-paper px-4 text-sm lg:w-24";
+    inputNote.id = "inp" 
     inputNote.type = "number";
     inputNote.min = "0";
     inputNote.max = "20";
     inputNote.step = "0.5";
     inputNote.placeholder = "Note";
+    inputNote.dataset.id = eleve.id 
 
+    
     labelInput.append(srOnly, inputNote);
 
     btnNote.type = "button";
+    btnNote.dataset.action = "note";
     btnNote.className = "btn-note h-11 rounded-full bg-ink px-3 sm:px-4 text-sm font-medium text-white hover:bg-brand";
     btnNote.textContent = "Ajouter la note";
+    
+    btnNote.dataset.id = eleve.id 
 
     msgP.className = "message mt-2 text-xs text-alert";
     msgP.textContent = "La note doit être un nombre entre 0 et 20.";
@@ -141,10 +147,9 @@ function afficherEleves(){
     });
     runderData(elevesFiltres)
 }
-const liste = document.querySelector("#liste");
-   
-function absences(e) {
-    const button = e.target.closest(".btn-absent");
+
+function absences(event) {
+    const button = event.target.closest(".btn-absent");
     if (!button) return;
     const id = Number(button.dataset.id);
     
@@ -157,7 +162,34 @@ function absences(e) {
     runderData();
 }
 
+function note(event) {
+    const button = event.target.closest(".btn-note");
+    if (!button) return;
 
+    let  vl  =button.parentElement.querySelector("#inp")
+    if(!vl) return
+    vl = vl.value
+
+    if(vl == "") return
+        console.log(vl)
+    const id = Number(button.dataset.id);
+
+    const eleve = eleves.find(eleve => eleve.id === id);
+    if (!eleve) return;
+
+
+    if (vl < 0 || vl > 20) return ; 
+    console.log(vl);
+    
+    eleve.notes.push(Number(vl));
+     
+    runderData(); 
+}
+
+
+
+
+listeEleves.addEventListener("click" , note)
 listeEleves.addEventListener("click" , absences)
 filtreGroupe.addEventListener("change" , afficherEleves)
 recherche.addEventListener("input" , afficherEleves)
