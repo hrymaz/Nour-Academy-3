@@ -186,7 +186,66 @@ function note(event) {
     runderData(); 
 }
 
+const eleve = document.querySelector('#form-eleve')
 
+const prenom = document.querySelector('#prenom');
+const nom = document.querySelector('#nom');
+const groupe = document.querySelector('#groupe');
+const email = document.querySelector('#email');
+const telephone = document.querySelector('#telephone')
+const code = document.querySelector('#code')
+
+const regexPrenom = /^[A-Za-zÀ-ÿ -]{2,}$/;
+
+const regexNom = /^[A-Za-zÀ-ÿ -]{7,}$/;
+
+const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const regexTelephone = /^(06|07)[0-9]{8}$|^\+212[67][0-9]{8}$/;
+
+const regexCode = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$/;
+
+
+
+prenom.addEventListener("input", () => {
+    if (regexPrenom.test(prenom.value)) {
+        console.log("Prénom valide");
+    } else {
+        console.log("Prénom invalide");
+    }
+});
+
+nom.addEventListener("input", () => {
+    if (regexNom.test(nom.value)) {
+        console.log("nom valide");
+    } else {
+        console.log("nom invalide");
+    }
+});
+
+email.addEventListener("input", () => {
+   if (regexEmail.test(email.value)) {
+    console.log("email valide");
+   } else {
+    console.log("emali invalide");
+   }
+}); 
+
+telephone.addEventListener("input", () => {
+     if (regexTelephone.test(telephone.value)) {
+       console.log("telephone valide")
+     } else {
+       console.log("telephone invalied")
+     }
+}); 
+
+code.addEventListener("input" , () => {
+   if (regexCode.test(code.value)) {
+      console.log("code valide")
+   } else {
+     console.log("code valide")
+   }
+})
 
 
 listeEleves.addEventListener("click" , note)
